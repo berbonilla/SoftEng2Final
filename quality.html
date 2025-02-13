@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    body{
+        overflow: hidden;
+    }
+
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 5%;
+        background-color: #434D5C;
+        padding: .4rem .8rem;
+        transition: all 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .sidebar .top .logo {
+        color: #C7D9DF;
+        display: flex;
+        height: 50px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 2rem;
+    }
+
+    .sidebar ul {
+        flex-grow: 1;
+    }
+
+    .sidebar ul li {
+        position: relative;
+        list-style: none;
+        height: 50px;
+        width: 80%;
+        margin: 0.8rem auto;
+        line-height: 50px;
+    }
+
+    .sidebar ul li a {
+        color: rgb(0, 0, 0);
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar .top .logo:hover {
+        background-color: #363A40;
+        color: #C7D9DF;
+        border-radius: 12px;
+    }
+
+    .sidebar ul li a i {
+        min-width: 50px;
+        text-align: center;
+        height: 50px;
+        border-radius: 12px;
+        line-height: 50px;
+        font-size: 2rem;
+        color: #C7D9DF;
+    }
+
+
+    .sidebar .logout a i {
+        font-size: 2rem;
+        color: #C7D9DF;
+        padding: 10px;
+        transition: color 0.3s ease;
+    }
+
+    .sidebar .logout a:hover i {
+        color: #e74c3c;
+        background-color: #363A40;
+        border-radius: 12px;
+    }
+
+    .main-content {
+        position: relative;
+        background-color: #F3F5F8;
+        min-height: 100vh;
+        top: 0;
+        left: 80px;
+        transition: all 0.5s ease;
+        width: calc(100% - 80px);
+        padding: 1rem;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+    .function-icons{
+        margin-top: 40%;
+    }
+    .logout{
+        position:absolute;
+        top:85%;
+        width:80%;
+    }
+
+    .topbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 10vh;
+        width: 100vw;
+        display: flex;
+        z-index: -1;
+    }
+    .topbar-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 10vh;
+        width: 100vw;
+        background-color: #434D5C;
+        display: flex;
+        z-index: -1;
+        opacity: .5;
+    }
+    .body-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: #181C21;
+        display: block;
+        z-index: -2;
+    }
+    .title{
+        font-family: "Jaldi-Bold",Monospace;
+        height: 100%;
+        width: 14%;
+        margin-left: 5%;;
+        color: #C7D9DF;
+        font-size: 1.5vw;
+        text-align: center;
+        padding-top: 3vh;
+        font-weight: bold;
+    }
+    .search-bar{
+        height: 85%;
+        width: 35vw;
+        margin-left: 15%;
+        display: flex;
+        padding-top: 5px;
+        
+    }
+    .search-bar-input{
+        height: 75%;
+        width: 85%;
+        margin:auto;
+        border-radius: 2px;
+        background: none;
+        border: 0px;
+    }
+    .search-bar-but{
+        height: 75%;
+        width: 5%;
+        margin:auto;
+        border-radius: 2px;
+        
+    }
+    .input-box{
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background-color: #434D5C;
+        color:white;
+    }
+    .input-box:hover{
+        border: 1px gray;
+        transition: .2s;
+    }
+    .input-box:focus{
+        border: 1px gray;
+    }
+    .alert-icon{
+        margin-top: .8%;
+        margin-left: 25%;
+        height: 70%;
+        width: 2%;
+    }
+    .document-icon{
+        margin-top: .8%;
+        margin-left: 1%;
+        height: 70%;
+        width: 2%;
+    }
+    .pie-graphs-container{
+        width: 93vw;
+        height:25vh;
+        margin-top: 5%;
+        margin-left: 6%;
+        display: flex;
+    }
+    .pie-graph{
+        width: 10%;
+        height: 75%;
+        margin: 10px auto;
+        border-radius: 100%;
+        font-family: "Jaldi-bold",monospace;
+        font-weight: bold;
+        font-size: 1.3vw;
+    }
+    .details-container{
+        width: 93vw;
+        height: 65vh;
+        margin-left: 6%;
+        display: block;
+        font-family: "Jaldi-bold",monospace;
+        font-weight: bold;
+        font-size: 1.3vw;
+        color: #C7D9DF;
+    }
+    .checklist{
+        width: 12vw;
+        height: 5vh;
+        margin-left: 89.5%;
+        margin-top: 5%;
+        font-family: "Jaldi-Bold",monospace;
+        text-align: center;
+        padding: 4px;
+        font-weight: bold;
+        font-size: 1.5vw;
+        overflow: hidden;
+        display: flex;
+        color: #C7D9DF;
+
+    }
+    .checklist-icon{
+        width: 20%;
+        height: 100%;
+    }
+    .details-container-top{
+        width: 90vw;
+        height: 29vh;
+        margin-left: 1.65%;
+        display: inline-flex;
+    }
+    .details-container-bot{
+        width: 90vw;
+        height: 29vh;
+        margin-left: 1.65%;
+        margin-top: 1.65%;
+        display: block;
+    }
+    .detection-details{
+        width: 49%;
+        height: 100%;
+        background-color: #434D5C;
+        margin-right:auto;
+        border-radius: 1vw;
+    }
+    .inventory-alerts{
+        width: 49%;
+        height: 100%;
+        background-color: #434D5C;
+        margin-left:auto;
+        border-radius: 1vw;
+    }
+    .stock-levels{
+        width: 100%;
+        height: 100%;
+        background-color: #434D5C;
+        margin:auto;
+        border-radius: 1vw;
+    }
+
+    #chart-container {
+      margin: auto;
+    }
+    canvas {
+        width: 80%;
+        height: 100%;
+        display: block;
+    }
+
+    .chart-container {
+      padding: 20px;
+      background-color: #333740;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      width: 90%;
+    }
+
+    @font-face{
+        font-family: "Jaldi-Bold";
+        src: url("fonts/Jaldi-Bold.ttf") format("ttf");
+    }
+
+</style>
+<body>
+    <div class="checklist">
+        Checklist
+        <div class="checklist-icon">
+            <img id="img" src="images/chevron-down.png" style="width: 100%;height: 100%;margin: auto;">
+        </div>
+    </div>
+    <div class="body-container">
+        <div class="sidebar">
+            <div class="top">
+                <a href="landing.html" class="logo">
+                    <img id="img" src="images/layers.png" style="width:100%;height:100%;margin:auto;">
+                </a>
+            </div>
+            <ul class="function-icons">
+                <li>
+                    <a href="home.html">
+                        <img id="img" src="images/monitor.png" style="width: 100%;height: 100%;margin: auto;">
+                    </a>
+                </li>
+                <li>
+                    <a href="quality.html">
+                        <img id="img" src="images/clipboard-list.png" style="width: 100%;height: 100%;margin: auto;">
+                    </a>
+                </li>
+                <li>
+                    <a href="component.html">
+                        <img id="img" src="images/list-plus.png" style="width: 100%;height: 100%;margin: auto;">
+                    </a>
+                </li>
+                <li>
+                    <a href="maintenance.html">
+                        <img id="img" src="images/clipboard-plus.png" style="width: 100%;height: 100%;margin: auto;">
+                    </a>
+                </li>
+            </ul>
+            <div class="logout">
+                <a href="index.html">
+                    <img id="img" src="images/log-out.png" style="width: 100%;height: 100%;margin: auto;">
+                </a>
+            </div>
+        </div>
+        <div class="topbar-bar">
+
+        </div>
+        <div class="topbar">
+            <div class="title">
+                Quality Alerts
+            </div>
+
+        </div>
+
+        <div class="pie-graphs-container">
+            <div class="pie-graph" id="chart-container">
+                <canvas id="issuesChart"></canvas>
+            </div>
+            <div class="pie-graph" id="chart-container">
+                <canvas id="salesChart"></canvas>
+
+            </div>
+            <div class="pie-graph" id="chart-container">
+                <canvas id="temperatureChart"></canvas>
+            </div>
+        </div>
+        <div class="details-container">
+            <div class="details-container-top">
+                <div class="detection-details">
+                    <div style="margin-left: 10px;padding-top: 10px;">Detection Details</div>
+                    <div style="width: 100%;height: 70%;">
+                        <canvas id="detectionChart"></canvas>
+                    </div>
+                </div>
+                <div class="inventory-alerts">  
+                    <div style="margin-left: 10px;padding-top: 10px;">Total Inventory Alerts</div>
+                    <div style="width: 100%;height: 70%;margin:auto;">
+                        <canvas style="width:100%;margin:auto;"id="gaugeChart"></canvas>
+                    </div>
+
+                </div>
+            </div>
+            <div class="details-container-bot">
+                <div class="stock-levels">  
+                    <div style="margin-left: 10px;padding-top: 10px;">Stock Level</div>
+                    <div style="width: 100%;height: 80%;">
+                        <canvas id="stockLevelsChart"> Tester</canvas>
+                    </div>  
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+
+
+      </script>
+</body>
+</html>

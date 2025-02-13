@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+.status {
+    font-size: 24px;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: fadeIn 0.5s forwards;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    position:absolute;
+    left:40%;
+    top:70%;
+}
+
+.valid {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.invalid {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.waiting {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

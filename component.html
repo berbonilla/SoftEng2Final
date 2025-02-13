@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 5%;
+        background-color: #434D5C;
+        padding: .4rem .8rem;
+        transition: all 0.5s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .sidebar .top .logo {
+        color: #C7D9DF;
+        display: flex;
+        height: 50px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 2rem;
+    }
+
+    .sidebar ul {
+        flex-grow: 1;
+    }
+
+    .sidebar ul li {
+        position: relative;
+        list-style: none;
+        height: 50px;
+        width: 80%;
+        margin: 0.8rem auto;
+        line-height: 50px;
+    }
+
+    .sidebar ul li a {
+        color: rgb(0, 0, 0);
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar .top .logo:hover {
+        background-color: #363A40;
+        color: #C7D9DF;
+        border-radius: 12px;
+    }
+
+    .sidebar ul li a i {
+        min-width: 50px;
+        text-align: center;
+        height: 50px;
+        border-radius: 12px;
+        line-height: 50px;
+        font-size: 2rem;
+        color: #C7D9DF;
+    }
+
+
+    .sidebar .logout a i {
+        font-size: 2rem;
+        color: #C7D9DF;
+        padding: 10px;
+        transition: color 0.3s ease;
+    }
+
+    .sidebar .logout a:hover i {
+        color: #e74c3c;
+        background-color: #363A40;
+        border-radius: 12px;
+    }
+
+    .main-content {
+        position: relative;
+        background-color: #F3F5F8;
+        min-height: 100vh;
+        top: 0;
+        left: 80px;
+        transition: all 0.5s ease;
+        width: calc(100% - 80px);
+        padding: 1rem;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+    .function-icons{
+        margin-top: 40%;
+    }
+    .logout{
+        position:absolute;
+        top:85%;
+        width:80%;
+    }
+
+    .topbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 10vh;
+        width: 100vw;
+        display: flex;
+        z-index: -1;
+    }
+    .topbar-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 10vh;
+        width: 100vw;
+        background-color: #434D5C;
+        display: flex;
+        z-index: -1;
+        opacity: .5;
+    }
+    .body-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: #181C21;
+        display: flex;
+        z-index: -2;
+    }
+    .title{
+        font-family: "Jaldi-Bold",Monospace;
+        height: 100%;
+        width: 14%;
+        margin-left: 5%;;
+        color: #C7D9DF;
+        font-size: 1.3vw;
+        text-align: center;
+        padding-top: 3vh;
+        font-weight: bold;
+    }
+    .search-bar{
+        height: 85%;
+        width: 35vw;
+        margin-left: 15%;
+        display: flex;
+        padding-top: 5px;
+        
+    }
+    .search-bar-input{
+        height: 75%;
+        width: 85%;
+        margin:auto;
+        border-radius: 2px;
+        background: none;
+        border: 0px;
+    }
+    .search-bar-but{
+        height: 75%;
+        width: 5%;
+        margin:auto;
+        border-radius: 2px;
+        
+    }
+    .input-box{
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background-color: #434D5C;
+        color:white;
+    }
+    .input-box:hover{
+        border: 1px gray;
+        transition: .2s;
+    }
+    .input-box:focus{
+        border: 1px gray;
+    }
+    .alert-icon{
+        margin-top: .8%;
+        margin-left: 25%;
+        height: 70%;
+        width: 2%;
+    }
+    .document-icon{
+        margin-top: .8%;
+        margin-left: 1%;
+        height: 70%;
+        width: 2%;
+    }
+    .stats-container{
+        width: 93vw;
+        height: 86vh;
+        margin-left: 6%;
+        margin-top: 6%;
+        font-family: "Jaldi-Bold",monospace;
+        color: #C7D9DF;
+        font-size: 1vw;
+        font-weight: bold;
+    }
+    .stats-container-top{
+        width: 100%;
+        height: 67%;
+        display: flex;
+    }
+    .stats-container-bot{
+        width: 100%;
+        height: 32%;
+        margin-top: 1%;
+
+    }
+    .dailyreport-container{
+        width: 30%;
+        height: 100%;
+
+    }
+    .efficiency-container{
+        width: 70%;
+        height: 100%;
+        background-color: #434D5C;
+        border-radius: 25px;
+    }
+    .CAT-chart{
+        width: 98%;
+        height: 48%;
+        background-color: #434D5C;
+        border-radius: 25px;
+    }
+    .ALU-chart{
+        width: 98%;
+        height: 48%;
+        background-color: #434D5C;
+        border-radius: 25px;
+        margin-top:2% ;
+    }
+    .prepandprod-container{
+        width: 100%;
+        height: 100%;
+        background-color: #434D5C;
+        border-radius: 25px;
+    }
+
+    #componentsChart{
+        width: 80%;
+        height: 70%;
+        margin: auto;
+    }
+    #utilizationChart{
+        width: 80%;
+        height: 70%;
+        margin: auto;
+    }
+    #efficiencyChart{
+        width: 70%;
+        height: 70%;
+        margin: auto;
+    }
+    table {
+            width: 96%;
+            border-collapse: collapse;
+            margin: auto;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4b6278;
+        }
+
+        td {
+            background-color: #445566;
+        }
+
+        .status-ongoing {
+            background-color: #00a651;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .status-outgoing {
+            background-color: #ff3b3b;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px auto;
+            width: 95%;
+        }
+
+        .pagination span {
+            cursor: pointer;
+        }
+
+    @font-face{
+        font-family: "Jaldi-Bold";
+        src: url("fonts/Jaldi-Bold.ttf") format("ttf");
+    }
+
+</style>
+<body>
+    <div class="body-container">
+        <div class="sidebar">
+            <div class="top">
+                <a href="landing.html" class="logo">
+                    <img id="img" src="images/layers.png" style="width:100%;height:100%;margin:auto;">
+                </a>
+            </div>
+            <ul class="function-icons">
+                <li>
+                    <a href="home.html">
+                        <img id="img" src="images/monitor.png" style="width: 100%;height: 100%;margin: auto;">
+                    </a>
+                </li>
+                <li>
+                    <a href="quality.html">
+                        <img id="img" src="images/clipboard-list.png" style="width: 100%;height: 100%;margin: auto;">
+                    </a>
+                </li>
+                <li>
+                    <a href="component.html">
+                        <img id="img" src="images/list-plus.png" style="width: 100%;height: 100%;margin: auto;">
+                    </a>
+                </li>
+                <li>
+                    <a href="maintenance.html">
+                        <img id="img" src="images/clipboard-plus.png" style="width: 100%;height: 100%;margin: auto;">
+                    </a>
+                </li>
+            </ul>
+            <div class="logout">
+                <a href="index.html">
+                    <img id="img" src="images/log-out.png" style="width: 100%;height: 100%;margin: auto;">
+                </a>
+            </div>
+        </div>
+        <div class="topbar-bar">
+
+        </div>
+        <div class="topbar">
+            <div class="title">
+                Component Assembly
+            </div>
+
+        </div>
+
+        <div class="stats-container">
+            <div class="stats-container-top">
+                <div class="dailyreport-container">
+                    <div class="CAT-chart">
+                        <div style="margin-left:2%;padding-top:2%"> Components Assembled This Week</div> 
+                        <canvas id="componentsChart"></canvas> 
+                    </div>
+                    <div class="ALU-chart">
+                        <div style="margin-left:2%;padding-top:2%"> Assemble Line Utilization</div> 
+                        <canvas id="utilizationChart"></canvas>
+                    </div>
+
+                </div>
+                <div class="efficiency-container">
+                    <div style="margin-left:2%;padding-top:2%"> Assembly Line Efficiency</div>
+                    <canvas id="efficiencyChart"></canvas>
+                </div>
+            </div>
+            <div class="stats-container-bot">
+                <div class="prepandprod-container">
+                    <div style="margin-left:1%;padding-top:1%">  Preparation and Production Line</div>
+                    <h2 style="margin-left:1%;padding-top:1%"></h2>
+                    
+                </div>   
+            </div>            
+        </div>
+    </div>
+
+    <script>
+  
+    </script>
+</body>
+</html>
